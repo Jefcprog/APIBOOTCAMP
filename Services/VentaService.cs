@@ -88,5 +88,29 @@ namespace Entity.Services
 
             return respuesta;
         }
+
+        public async Task<Respuesta> PostVenta(Venta venta)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                var query = _context.Ventas.OrderByDescending(x => x.IdFactura).Select(x => x.IdFactura).FirstOrDefault();
+
+                venta.IdFactura = Convert.ToInt32(query) + 1;
+                venta.Fecha_Hora = DateTime.Now;
+
+                _context.Ventas.Add(venta);
+                await _context.SaveChangesAsync();
+
+                respuesta.Cod = "000";
+                respuesta.Mensaje = "Se inserto correctamente";
+            }
+            catch (Exception ex)
+            {
+                respuesta.Cod = "999";
+                respuesta.Mensaje = $"Se ha generado una novedad, Error: {ex.Message}";
+            }
+            return respuesta;
+        }
     }
 }

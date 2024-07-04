@@ -32,5 +32,22 @@ namespace Entity.Controllers
 
             return respuesta;
         }
+        [HttpPost]
+        [Route("PostVenta")]
+        public async Task<Respuesta> PostVenta([FromBody] Venta venta)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _venta.PostVenta(venta);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return respuesta;
+        }
     }
 }

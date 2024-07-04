@@ -139,15 +139,12 @@ namespace Entity.Services
             var respuesta = new Respuesta();
             try
             {
-                // Verificar si el producto existe
                 var existingProducto = await _context.Productos.FindAsync(producto.ProductoId);
                 if (existingProducto != null)
                 {
-                    // Adjuntar la entidad existente al contexto y actualizar los valores
                     _context.Entry(existingProducto).CurrentValues.SetValues(producto);
                     _context.Entry(existingProducto).State = EntityState.Modified;
 
-                    // Guardar los cambios en la base de datos
 
                     producto.FechaHoraReg = DateTime.Now;
                     await _context.SaveChangesAsync();
