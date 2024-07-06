@@ -20,9 +20,9 @@
 
         public string? SucursalDetalle { get; set; }
 
-        public string? Caja { get; set; }
+        public string? CajaDetalle { get; set; }
 
-        public string? Vendedor { get; set; }
+        public string? VendedorDetalle { get; set; }
 
         public double? Precio { get; set; }
 

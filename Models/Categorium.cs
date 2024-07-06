@@ -16,4 +16,5 @@ public partial class Categorium
     public virtual ICollection<Producto> Productos { get; set; } = new List<Producto>();
 
     public virtual ICollection<Venta> Venta { get; set; } = new List<Venta>();
+
 }

@@ -1,6 +1,7 @@
 ﻿using Entity.DTOs;
 using Entity.Interfaces;
 using Entity.Models;
+using Entity.Utilitarios;
 using Microsoft.EntityFrameworkCore;
 
 namespace Entity.Services
@@ -8,6 +9,7 @@ namespace Entity.Services
     public class ProductoServices : IProducto
     {
         private readonly VentaspruebaContext _context;
+        private ControlError Log = new ControlError();
 
         public ProductoServices(VentaspruebaContext context)
         {
@@ -104,7 +106,8 @@ namespace Entity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presentó un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("GetListaProductos", ex.Message);
             }
 
             return respuesta;
@@ -129,7 +132,8 @@ namespace Entity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presentó un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("PostProducto", ex.Message);
             }
             return respuesta;
         }
@@ -160,8 +164,9 @@ namespace Entity.Services
             }
             catch (Exception ex)
             {
-                respuesta.Cod = "888";
-                respuesta.Mensaje = $"Se presentó un error: {ex.Message}";
+                respuesta.Cod = "999";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("PutProducto", ex.Message);
             }
             return respuesta;
         }

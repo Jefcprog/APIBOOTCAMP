@@ -1,5 +1,6 @@
 ﻿using Entity.Interfaces;
 using Entity.Models;
+using Entity.Utilitarios;
 using Microsoft.EntityFrameworkCore;
 
 namespace Entity.Services
@@ -7,6 +8,7 @@ namespace Entity.Services
     public class CatalogoServices : ICatalogo
     {
         private readonly VentaspruebaContext _context;
+        private ControlError Log = new ControlError();
 
         public CatalogoServices(VentaspruebaContext context)
         {
@@ -27,7 +29,8 @@ namespace Entity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presentó un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("GetCategoria", ex.Message);
             }
 
             return respuesta;
@@ -47,8 +50,8 @@ namespace Entity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Me a presentado una novedad en el Metodo: GetMarca, Error: {ex.Message}";
-
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("GetMarca", ex.Message);
             }
             return respuesta;
         }
@@ -67,7 +70,8 @@ namespace Entity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Me a presentado una novedad en el Metodo: GetModelo, Error: {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("GetModelo", ex.Message);
 
             }
             return respuesta;
@@ -87,7 +91,8 @@ namespace Entity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Me a presentado una novedad en el Metodo: GetSucursal, Error: {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("GetSucursal", ex.Message);
 
             }
             return respuesta;

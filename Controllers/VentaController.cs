@@ -32,6 +32,25 @@ namespace Entity.Controllers
 
             return respuesta;
         }
+
+        [HttpGet]
+        [Route("GetVentaReporte")]
+        public async Task<Respuesta> GetVentaReporte(double precio)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _venta.GetVentaReporte(precio);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return respuesta;
+        }
+
         [HttpPost]
         [Route("PostVenta")]
         public async Task<Respuesta> PostVenta([FromBody] Venta venta)
@@ -47,6 +66,22 @@ namespace Entity.Controllers
                 throw;
             }
 
+            return respuesta;
+        }
+        [HttpPut]
+        [Route("PutVenta")]
+        public async Task<Respuesta> PutVenta([FromBody] Venta venta)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _venta.PutVenta(venta);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
             return respuesta;
         }
     }

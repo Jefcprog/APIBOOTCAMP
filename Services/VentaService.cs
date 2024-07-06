@@ -1,6 +1,7 @@
 ﻿using Entity.DTOs;
 using Entity.Interfaces;
 using Entity.Models;
+using Entity.Utilitarios;
 using Microsoft.EntityFrameworkCore;
 
 namespace Entity.Services
@@ -8,6 +9,7 @@ namespace Entity.Services
     public class VentaServices : IVenta
     {
         private readonly VentaspruebaContext _context;
+        private ControlError Log = new ControlError();
 
         public VentaServices(VentaspruebaContext context)
         {
@@ -25,7 +27,9 @@ namespace Entity.Services
                             join p in _context.Productos on v.ProductoId equals p.ProductoId
                             join mo in _context.Modelos on v.ModeloId equals mo.ModeloId
                             join ct in _context.Categoria on v.CategId equals ct.CategId
+                            join c in _context.Cajas on v.CajaId equals c.CajaId
                             join ma in _context.Marcas on v.MarcaId equals ma.MarcaId
+                            join ve in _context.Vendedors on v.VendedorId equals ve.VendedorId
                             join s in _context.Sucursals on v.SucursalId equals s.SucursalId
                             select new VentaDto
                             {
@@ -38,8 +42,8 @@ namespace Entity.Services
                                 CategDetalle = ct.CategNombre,
                                 MarcaDetalle = ma.MarcaNombre,
                                 SucursalDetalle = s.SucursalNombre,
-                                Caja = v.Caja.ToString(),
-                                Vendedor = v.Vendedor.ToString(),
+                                CajaDetalle = c.CajaDescripcion,
+                                VendedorDetalle = ve.VendedorDescripcion,
                                 Precio = v.Precio,
                                 Unidades = v.Unidades,
                                 EstadoId = v.EstadoId
@@ -58,7 +62,7 @@ namespace Entity.Services
 
                 if (!string.IsNullOrEmpty(vendedor))
                 {
-                    query = query.Where(v => v.Vendedor.Contains(vendedor));
+                    query = query.Where(v => v.VendedorDetalle.Contains(vendedor));
                 }
 
                 if (precio.HasValue)
@@ -83,11 +87,44 @@ namespace Entity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se presentó un error: {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("GetVenta", ex.Message);
             }
 
             return respuesta;
         }
+
+        public async Task<Respuesta> GetVentaReporte(double precio)
+        {
+            var respuesta = new Respuesta();
+
+            try
+            {
+                respuesta.Cod = "000";
+
+                var query = from v in _context.Ventas
+                            where v.Precio >= precio
+                            group v by v.Precio into newGroup
+                            select new
+                            {
+                                Precio = newGroup.Key,
+                                CantidadRegistros = newGroup.Count()
+
+                            };
+
+                respuesta.Data = await query.ToListAsync();
+                respuesta.Mensaje = "Ok";
+            }
+            catch (Exception ex)
+            {
+                respuesta.Cod = "999";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("GetVentaReporte", ex.Message);
+            }
+            return respuesta;
+        }
+
+
 
         public async Task<Respuesta> PostVenta(Venta venta)
         {
@@ -108,9 +145,42 @@ namespace Entity.Services
             catch (Exception ex)
             {
                 respuesta.Cod = "999";
-                respuesta.Mensaje = $"Se ha generado una novedad, Error: {ex.Message}";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("PostVenta", ex.Message);
             }
             return respuesta;
         }
+
+        public async Task<Respuesta> PutVenta(Venta venta)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                var existingVenta = await _context.Ventas.FindAsync(venta.IdFactura);
+                if (existingVenta != null)
+                {
+                    _context.Entry(existingVenta).CurrentValues.SetValues(venta);
+                    _context.Entry(existingVenta).State = EntityState.Modified;
+
+                    await _context.SaveChangesAsync();
+
+                    respuesta.Cod = "111";
+                    respuesta.Mensaje = "Se actualizó correctamente";
+                }
+                else
+                {
+                    respuesta.Cod = "888";
+                    respuesta.Mensaje = "El producto no existe";
+                }
+            }
+            catch (Exception ex)
+            {
+                respuesta.Cod = "999";
+                respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("PutVenta", ex.Message);
+            }
+            return respuesta;
+        }
+
     }
 }
