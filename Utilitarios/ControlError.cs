@@ -20,7 +20,7 @@ namespace Entity.Utilitarios
 					Directory.CreateDirectory(ruta);
                 }
 
-				StreamWriter write = new StreamWriter($"{ruta}\\{archivo}");
+				StreamWriter write = new StreamWriter($"{ruta}\\{archivo}", true);
 				write.WriteLine($"Se presentó una novedad en el método: {Metodo}, con el siguiente error: {error}");
 				write.Close();
 
