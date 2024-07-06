@@ -1,5 +1,6 @@
 ﻿using Entity.Interfaces;
 using Entity.Models;
+using Entity.Utilitarios;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Entity.Controllers
@@ -9,6 +10,7 @@ namespace Entity.Controllers
     public class VentaController : Controller
     {
         private readonly IVenta _venta;
+        private ControlError Log = new ControlError();
 
         public VentaController(IVenta venta)
         {
@@ -24,10 +26,9 @@ namespace Entity.Controllers
             {
                 respuesta = await _venta.GetVenta(numFactura,date, vendedor, precio, estado, sucursal);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("VentaController", "GetVenta", ex.Message);                
             }
 
             return respuesta;
@@ -42,10 +43,9 @@ namespace Entity.Controllers
             {
                 respuesta = await _venta.GetVentaReporte(precio);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("VentaController", "GetVentaReporte", ex.Message);
             }
 
             return respuesta;
@@ -60,10 +60,9 @@ namespace Entity.Controllers
             {
                 respuesta = await _venta.PostVenta(venta);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("VentaController", "PostVenta", ex.Message);
             }
 
             return respuesta;
@@ -77,11 +76,11 @@ namespace Entity.Controllers
             {
                 respuesta = await _venta.PutVenta(venta);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("VentaController", "PutVenta", ex.Message);
             }
+
             return respuesta;
         }
     }

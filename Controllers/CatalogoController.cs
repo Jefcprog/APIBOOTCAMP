@@ -1,5 +1,6 @@
 ﻿using Entity.Interfaces;
 using Entity.Models;
+using Entity.Utilitarios;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Entity.Controllers
@@ -9,6 +10,7 @@ namespace Entity.Controllers
     public class CatalogoController : Controller
     {
         private readonly ICatalogo _catalogo;
+        private ControlError Log = new ControlError();
 
         public CatalogoController(ICatalogo catalogo)
         {
@@ -24,10 +26,9 @@ namespace Entity.Controllers
             {
                 respuesta = await _catalogo.GetCategoria();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "GetCategoria", ex.Message);
             }
             return respuesta;
         }
@@ -41,10 +42,9 @@ namespace Entity.Controllers
             {
                 respuesta = await _catalogo.GetMarca();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "GetMarca", ex.Message);
             }
             return respuesta;
         }
@@ -58,10 +58,9 @@ namespace Entity.Controllers
             {
                 respuesta = await _catalogo.GetModelo();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "GetModelo", ex.Message);
             }
             return respuesta;
         }
@@ -75,10 +74,9 @@ namespace Entity.Controllers
             {
                 respuesta = await _catalogo.GetSucursal();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("CatalogoController", "GetSucursal", ex.Message);
             }
             return respuesta;
         }

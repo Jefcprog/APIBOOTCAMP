@@ -88,7 +88,7 @@ namespace Entity.Services
             {
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
-                Log.LogErrorMetodos("GetVenta", ex.Message);
+                Log.LogErrorMetodos("VentaServices", "GetVenta", ex.Message);
             }
 
             return respuesta;
@@ -119,7 +119,7 @@ namespace Entity.Services
             {
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
-                Log.LogErrorMetodos("GetVentaReporte", ex.Message);
+                Log.LogErrorMetodos("VentaServices", "GetVentaReporte", ex.Message);
             }
             return respuesta;
         }
@@ -146,7 +146,7 @@ namespace Entity.Services
             {
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
-                Log.LogErrorMetodos("PostVenta", ex.Message);
+                Log.LogErrorMetodos("VentaServices", "PostVenta", ex.Message);
             }
             return respuesta;
         }
@@ -177,7 +177,7 @@ namespace Entity.Services
             {
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
-                Log.LogErrorMetodos("PutVenta", ex.Message);
+                Log.LogErrorMetodos("VentaServices", "PutVenta", ex.Message);
             }
             return respuesta;
         }

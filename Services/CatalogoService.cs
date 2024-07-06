@@ -30,7 +30,7 @@ namespace Entity.Services
             {
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
-                Log.LogErrorMetodos("GetCategoria", ex.Message);
+                Log.LogErrorMetodos("CatalogoServices", "GetCategoria", ex.Message);
             }
 
             return respuesta;
@@ -51,7 +51,7 @@ namespace Entity.Services
             {
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
-                Log.LogErrorMetodos("GetMarca", ex.Message);
+                Log.LogErrorMetodos("CatalogoServices", "GetMarca", ex.Message);
             }
             return respuesta;
         }
@@ -71,7 +71,7 @@ namespace Entity.Services
             {
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
-                Log.LogErrorMetodos("GetModelo", ex.Message);
+                Log.LogErrorMetodos("CatalogoServices", "GetModelo", ex.Message);
 
             }
             return respuesta;
@@ -92,7 +92,7 @@ namespace Entity.Services
             {
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
-                Log.LogErrorMetodos("GetSucursal", ex.Message);
+                Log.LogErrorMetodos("CatalogoServices", "GetSucursal", ex.Message);
 
             }
             return respuesta;

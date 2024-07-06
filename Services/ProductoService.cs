@@ -107,7 +107,7 @@ namespace Entity.Services
             {
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
-                Log.LogErrorMetodos("GetListaProductos", ex.Message);
+                Log.LogErrorMetodos("ProductoServices", "GetListaProductos", ex.Message);
             }
 
             return respuesta;
@@ -133,7 +133,7 @@ namespace Entity.Services
             {
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
-                Log.LogErrorMetodos("PostProducto", ex.Message);
+                Log.LogErrorMetodos("ProductoServices", "PostProducto", ex.Message);
             }
             return respuesta;
         }
@@ -166,7 +166,7 @@ namespace Entity.Services
             {
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
-                Log.LogErrorMetodos("PutProducto", ex.Message);
+                Log.LogErrorMetodos("ProductoServices", "PutProducto", ex.Message);
             }
             return respuesta;
         }

@@ -1,5 +1,6 @@
 ﻿using Entity.Interfaces;
 using Entity.Models;
+using Entity.Utilitarios;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -10,6 +11,7 @@ namespace Entity.Controllers
     public class ClienteController : Controller
     {
         private readonly ICliente _cliente;
+        private ControlError Log = new ControlError();
 
         public ClienteController(ICliente cliente)
         {
@@ -25,12 +27,10 @@ namespace Entity.Controllers
             {
                 respuesta = await _cliente.GetListaClientes(clienteID, clientenombre, cedula);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("ClienteController", "GetListaClientes", ex.Message);
             }
-
             return respuesta;
         }
 
@@ -43,12 +43,10 @@ namespace Entity.Controllers
             {
                 respuesta = await _cliente.PostCliente(cliente);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("ClienteController", "PostCliente", ex.Message);
             }
-
             return respuesta;
         }
 
@@ -61,10 +59,9 @@ namespace Entity.Controllers
             {
                 respuesta = await _cliente.PutCliente(cliente);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("ClienteController", "PutCliente", ex.Message);
             }
             return respuesta;
         }

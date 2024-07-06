@@ -4,7 +4,7 @@ namespace Entity.Utilitarios
 {
     public class ControlError
     {
-        public void LogErrorMetodos(string Metodo, string error)
+        public void LogErrorMetodos(string clase, string Metodo, string error)
         {
 			var ruta = string.Empty;
 			var archivo = string.Empty;
@@ -21,7 +21,7 @@ namespace Entity.Utilitarios
                 }
 
 				StreamWriter write = new StreamWriter($"{ruta}\\{archivo}", true);
-				write.WriteLine($"Se presentó una novedad en el método: {Metodo}, con el siguiente error: {error}");
+				write.WriteLine($"Se presentó una novedad en la clase: {clase}, en el método: {Metodo}, con el siguiente error: {error}");
 				write.Close();
 
             }

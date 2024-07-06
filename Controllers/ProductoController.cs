@@ -1,5 +1,6 @@
 ﻿using Entity.Interfaces;
 using Entity.Models;
+using Entity.Utilitarios;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -10,7 +11,7 @@ namespace Entity.Controllers
     public class ProductoController : Controller
     {
         private readonly IProducto _producto;
-
+        private ControlError Log = new ControlError();
         public ProductoController(IProducto producto)
         {
             this._producto = producto;
@@ -25,12 +26,10 @@ namespace Entity.Controllers
             {
                 respuesta = await _producto.GetListaProductos(productoID, precio);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("ProductoController", "GetListaProductos", ex.Message);
             }
-
             return respuesta;
         }
 
@@ -43,12 +42,10 @@ namespace Entity.Controllers
             {
                 respuesta = await _producto.PostProducto(producto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("ProductoController", "PostProducto", ex.Message);
             }
-
             return respuesta;
         }
 
@@ -61,10 +58,9 @@ namespace Entity.Controllers
             {
                 respuesta = await _producto.PutProducto(producto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                Log.LogErrorMetodos("ProductoController", "PutProducto", ex.Message);
             }
             return respuesta;
         }
