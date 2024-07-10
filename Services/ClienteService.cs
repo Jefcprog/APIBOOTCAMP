@@ -16,44 +16,58 @@ namespace Entity.Services
             this._context = context;
         }
 
-        public async Task<Respuesta> GetListaClientes(double clienteID, string? clientenombre, double cedula)
+        public async Task<Respuesta> GetListaClientes(double clienteID, string? clienteNombre, double cedula)
         {
             var respuesta = new Respuesta();
             try
             {
-                if (clienteID == 0 || clientenombre == null || cedula == 0)
-                {
-                    respuesta.Cod = "000";
-                    respuesta.Data = await (from cl in _context.Clientes
-                                            where cl.EstadoId.Equals(1)
-                                            select new  ClienteDto
-                                            {
-                                                ClienteId = cl.ClienteId,
-                                                ClienteNombre = cl.ClienteNombre,
-                                                Cedula = cl.Cedula,
-                                                Estado = cl.EstadoId,
-                                                FechaHoraReg = cl.FechaHoraReg
+                var query = from cl in _context.Clientes
+                                where cl.EstadoId.Equals(1)
+                                select new ClienteDto
+                                {
+                                    ClienteId = cl.ClienteId,
+                                    ClienteNombre = cl.ClienteNombre,
+                                    Cedula = cl.Cedula,
+                                    Estado = cl.EstadoId,
+                                    FechaHoraReg = cl.FechaHoraReg
+                                };
 
-                                            }).ToListAsync();
-                    respuesta.Mensaje = "OK";
+                // Filtrar según las combinaciones posibles de los parámetros
+                if (clienteID != 0 && !string.IsNullOrEmpty(clienteNombre) && cedula != 0)
+                {
+                    respuesta.Data = await query.Where(cl => cl.ClienteId == clienteID && cl.ClienteNombre.Contains(clienteNombre) && cl.Cedula == cedula).ToListAsync();
+                }
+                else if (clienteID != 0 && !string.IsNullOrEmpty(clienteNombre))
+                {
+                    respuesta.Data = await query.Where(cl => cl.ClienteId == clienteID && cl.ClienteNombre.Contains(clienteNombre)).ToListAsync();
+                }
+                else if (clienteID != 0 && cedula != 0)
+                {
+                    respuesta.Data = await query.Where(cl => cl.ClienteId == clienteID && cl.Cedula == cedula).ToListAsync();
+                }
+                else if (!string.IsNullOrEmpty(clienteNombre) && cedula != 0)
+                {
+                    respuesta.Data = await query.Where(cl => cl.ClienteNombre.Contains(clienteNombre) && cl.Cedula == cedula).ToListAsync();
+                }
+                else if (clienteID != 0)
+                {
+                    respuesta.Data = await query.Where(cl => cl.ClienteId == clienteID).ToListAsync();
+                }
+                else if (!string.IsNullOrEmpty(clienteNombre))
+                {
+                    respuesta.Data = await query.Where(cl => cl.ClienteNombre.Contains(clienteNombre)).ToListAsync();
+                }
+                else if (cedula != 0)
+                {
+                    respuesta.Data = await query.Where(cl => cl.Cedula == cedula).ToListAsync();
+                }
+                else
+                {
+                    respuesta.Data = await query.ToListAsync();
                 }
 
-                else if (clienteID != 0 || clientenombre != null || cedula != 0)
-                {
-                    respuesta.Cod = "000";
-                    respuesta.Data = await (from cl in _context.Clientes
-                                            where cl.EstadoId.Equals(1)
-                                            select new ClienteDto
-                                            {
-                                                ClienteId = cl.ClienteId,
-                                                ClienteNombre = cl.ClienteNombre,
-                                                Cedula = cl.Cedula,
-                                                Estado = cl.EstadoId,
-                                                FechaHoraReg = cl.FechaHoraReg
-
-                                            }).ToListAsync();
-                    respuesta.Mensaje = "OK";
-                }
+                respuesta.Cod = "000";
+                respuesta.Mensaje = "OK";
             }
             catch (Exception ex)
             {
@@ -64,6 +78,7 @@ namespace Entity.Services
 
             return respuesta;
         }
+
 
         public async Task<Respuesta> PostCliente(Cliente cliente)
         {

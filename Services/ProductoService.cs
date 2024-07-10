@@ -21,85 +21,45 @@ namespace Entity.Services
             var respuesta = new Respuesta();
             try
             {
+                var query = await (from p in _context.Productos
+                                   join m in _context.Marcas on p.MarcaId equals m.MarcaId
+                                   join c in _context.Categoria on p.CategId equals c.CategId
+                                   join mo in _context.Modelos on p.ModeloId equals mo.ModeloId
+                                   where p.EstadoId.Equals(1)
+                                   select new ProductoDto
+                                   {
+                                       ProductoId = p.ProductoId,
+                                       ProductoDescrip = p.ProductoDescrip,
+                                       Estado = p.EstadoId,
+                                       FechaHoraReg = p.FechaHoraReg,
+                                       Precio = p.Precio,
+                                       CategNombre = c.CategNombre,
+                                       MarcaNombre = m.MarcaNombre,
+                                       ModeloNombre = mo.ModeloDescripción
+                                   }).ToListAsync();
+
                 if (productoID == 0 && precio == 0)
                 {
                     respuesta.Cod = "000";
-                    respuesta.Data = await (from p in _context.Productos
-                                            join m in _context.Marcas on p.MarcaId equals m.MarcaId
-                                            join c in _context.Categoria on p.CategId equals c.CategId
-                                            join mo in _context.Modelos on p.ModeloId equals mo.ModeloId
-                                            where p.EstadoId.Equals(1)
-                                            select new ProductoDto
-                                            {
-                                                ProductoId = p.ProductoId,
-                                                ProductoDescrip = p.ProductoDescrip,
-                                                Estado = p.EstadoId,
-                                                FechaHoraReg = p.FechaHoraReg,
-                                                Precio = p.Precio,
-                                                CategNombre = c.CategNombre,
-                                                MarcaNombre = m.MarcaNombre,
-                                                ModeloNombre = mo.ModeloDescripción
-                                            }).ToListAsync();
+                    respuesta.Data = query;
                     respuesta.Mensaje = "OK";
                 }
                 else if (productoID != 0 && precio == 0)
                 {
-                    respuesta.Data = await (from p in _context.Productos
-                                            join m in _context.Marcas on p.MarcaId equals m.MarcaId
-                                            join c in _context.Categoria on p.CategId equals c.CategId
-                                            join mo in _context.Modelos on p.ModeloId equals mo.ModeloId
-                                            where p.EstadoId.Equals(1)
-                                            select new ProductoDto
-                                            {
-                                                ProductoId = p.ProductoId,
-                                                ProductoDescrip = p.ProductoDescrip,
-                                                Estado = p.EstadoId,
-                                                FechaHoraReg = p.FechaHoraReg,
-                                                Precio = p.Precio,
-                                                CategNombre = c.CategNombre,
-                                                MarcaNombre = m.MarcaNombre,
-                                                ModeloNombre = mo.ModeloDescripción
-                                            }).ToListAsync();
+                    respuesta.Data = query.Where(p => p.ProductoId == productoID).ToList();
+                    respuesta.Cod = "000";
                     respuesta.Mensaje = "OK";
                 }
                 else if (precio != 0 && productoID == 0)
                 {
-                    respuesta.Data = await (from p in _context.Productos
-                                            join m in _context.Marcas on p.MarcaId equals m.MarcaId
-                                            join c in _context.Categoria on p.CategId equals c.CategId
-                                            join mo in _context.Modelos on p.ModeloId equals mo.ModeloId
-                                            where p.EstadoId.Equals(1)
-                                            select new ProductoDto
-                                            {
-                                                ProductoId = p.ProductoId,
-                                                ProductoDescrip = p.ProductoDescrip,
-                                                Estado = p.EstadoId,
-                                                FechaHoraReg = p.FechaHoraReg,
-                                                Precio = p.Precio,
-                                                CategNombre = c.CategNombre,
-                                                MarcaNombre = m.MarcaNombre,
-                                                ModeloNombre = mo.ModeloDescripción
-                                            }).ToListAsync();
+                    respuesta.Data = query.Where(p => p.Precio <= precio).ToList();
+                    respuesta.Cod = "000";
                     respuesta.Mensaje = "OK";
                 }
                 else if (productoID != 0 && precio != 0)
                 {
-                    respuesta.Data = await (from p in _context.Productos
-                                            join m in _context.Marcas on p.MarcaId equals m.MarcaId
-                                            join c in _context.Categoria on p.CategId equals c.CategId
-                                            join mo in _context.Modelos on p.ModeloId equals mo.ModeloId
-                                            where p.EstadoId.Equals(1)
-                                            select new ProductoDto
-                                            {
-                                                ProductoId = p.ProductoId,
-                                                ProductoDescrip = p.ProductoDescrip,
-                                                Estado = p.EstadoId,
-                                                FechaHoraReg = p.FechaHoraReg,
-                                                Precio = p.Precio,
-                                                CategNombre = c.CategNombre,
-                                                MarcaNombre = m.MarcaNombre,
-                                                ModeloNombre = mo.ModeloDescripción
-                                            }).ToListAsync();
+                    respuesta.Data = query.Where(p => p.ProductoId == productoID && p.Precio <= precio).ToList();
+                    respuesta.Cod = "000";
                     respuesta.Mensaje = "OK";
                 }
             }
