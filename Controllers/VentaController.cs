@@ -24,7 +24,7 @@ namespace Entity.Controllers
             var respuesta = new Respuesta();
             try
             {
-                respuesta = await _venta.GetVenta(numFactura,date, vendedor, precio, estado, sucursal);
+                respuesta = await _venta.GetVenta(numFactura, date, vendedor, precio, estado, sucursal);
             }
             catch (Exception ex)
             {
