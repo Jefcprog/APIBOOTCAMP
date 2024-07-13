@@ -80,5 +80,68 @@ namespace Entity.Controllers
             }
             return respuesta;
         }
+        [HttpGet]
+        [Route("GetCiudad")]
+        public async Task<Respuesta> GetCiudad()
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _catalogo.GetCiudad();
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorMetodos("CatalogoController", "GetCiudad", ex.Message);
+            }
+            return respuesta;
+        }
+        [HttpGet]
+        [Route("GetCaja")]
+        public async Task<Respuesta> GetCaja()
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _catalogo.GetCaja();
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorMetodos("CatalogoController", "GetCaja", ex.Message);
+            }
+            return respuesta;
+        }
+        [HttpPost]
+        [Route("PostCategoria")]
+        public async Task<Respuesta> PostCategoria([FromBody] Categorium categoria)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _catalogo.PostCategoria(categoria);
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorMetodos("CatalogoController", "PostVenta", ex.Message);
+            }
+
+            return respuesta;
+        }
+
+        [HttpPut]
+        [Route("PutCategoria")]
+        public async Task<Respuesta> PutCategoria([FromBody] Categorium categoria)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _catalogo.PutCategoria(categoria);
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorMetodos("CatalogoController", "PutCategoria", ex.Message);
+            }
+
+            return respuesta;
+        }
     }
 }

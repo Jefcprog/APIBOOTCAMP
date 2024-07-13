@@ -28,7 +28,7 @@ namespace Entity.Controllers
             }
             catch (Exception ex)
             {
-                Log.LogErrorMetodos("VentaController", "GetVenta", ex.Message);                
+                Log.LogErrorMetodos("VentaController", "GetVenta", ex.Message);
             }
 
             return respuesta;
