@@ -8,5 +8,6 @@ namespace Entity.Interfaces
         Task<Respuesta> GetVentaReporte(double precio);
         Task<Respuesta> PostVenta(Venta venta);
         Task<Respuesta> PutVenta(Venta venta);
+        Task<Respuesta> DeleteVenta(double id);
     }
 }

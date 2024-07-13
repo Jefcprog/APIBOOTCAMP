@@ -283,7 +283,7 @@ namespace Entity.Services
             {
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
-                Log.LogErrorMetodos("CatalogoServices", "PostCategoria", ex.Message);
+                Log.LogErrorMetodos("CatalogoServices", "PostCaja", ex.Message);
             }
             return respuesta;
         }
@@ -476,6 +476,198 @@ namespace Entity.Services
                 respuesta.Cod = "999";
                 respuesta.Mensaje = $"Se presentó una novedad, comunicarse con el departamento de sistemas";
                 Log.LogErrorMetodos("CatalogoServices", "PutCaja", ex.Message);
+            }
+            return respuesta;
+        }
+
+        public async Task<Respuesta> DeleteCategoria(double id)
+        {
+            Respuesta respuesta = new Respuesta();
+            try
+            {
+                Categorium? categoriaToDelete = await _context.Categoria.FirstOrDefaultAsync(x => x.CategId == id);
+
+                if (categoriaToDelete is not null)
+                {
+                    categoriaToDelete.EstadoId = 0;
+
+                    _context.Categoria.Update(categoriaToDelete);
+                    await _context.SaveChangesAsync();
+
+                    respuesta.Cod = "000";
+                    respuesta.Data = categoriaToDelete;
+                    respuesta.Mensaje = "OK";
+                }
+                else
+                {
+                    respuesta.Cod = "999";
+                    respuesta.Mensaje = "No existe una categoria registrado con el ID ingresado, no se puede realizar cambios";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("CatalogoServices", "DeleteCategoria", ex.Message);
+            }
+            return respuesta;
+        }
+
+        public async Task<Respuesta> DeleteMarca(double id)
+        {
+            Respuesta respuesta = new Respuesta();
+            try
+            {
+                Categorium? categoriaToDelete = await _context.Categoria.FirstOrDefaultAsync(x => x.CategId == id);
+
+                if (categoriaToDelete is not null)
+                {
+                    categoriaToDelete.EstadoId = 0;
+
+                    _context.Categoria.Update(categoriaToDelete);
+                    await _context.SaveChangesAsync();
+
+                    respuesta.Cod = "000";
+                    respuesta.Data = categoriaToDelete;
+                    respuesta.Mensaje = "OK";
+                }
+                else
+                {
+                    respuesta.Cod = "999";
+                    respuesta.Mensaje = "No existe una marca registrado con el ID ingresado, no se puede realizar cambios";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("CatalogoServices", "DeleteMarca", ex.Message);
+            }
+            return respuesta;
+        }
+
+        public async Task<Respuesta> DeleteSucursal(double id)
+        {
+            Respuesta respuesta = new Respuesta();
+            try
+            {
+                Sucursal? sucursalToDelete = await _context.Sucursals.FirstOrDefaultAsync(x => x.SucursalId == id);
+
+                if (sucursalToDelete is not null)
+                {
+                    sucursalToDelete.EstadoId = 0;
+
+                    _context.Sucursals.Update(sucursalToDelete);
+                    await _context.SaveChangesAsync();
+
+                    respuesta.Cod = "000";
+                    respuesta.Data = sucursalToDelete;
+                    respuesta.Mensaje = "OK";
+                }
+                else
+                {
+                    respuesta.Cod = "999";
+                    respuesta.Mensaje = "No existe una sucursal registrado con el ID ingresado, no se puede realizar cambios";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("CatalogoServices", "DeleteSucursal", ex.Message);
+            }
+            return respuesta;
+        }
+
+        public async Task<Respuesta> DeleteModelo(double id)
+        {
+            Respuesta respuesta = new Respuesta();
+            try
+            {
+                Modelo? modeloToDelete = await _context.Modelos.FirstOrDefaultAsync(x => x.ModeloId == id);
+
+                if (modeloToDelete is not null)
+                {
+                    modeloToDelete.EstadoId = 0;
+
+                    _context.Modelos.Update(modeloToDelete);
+                    await _context.SaveChangesAsync();
+
+                    respuesta.Cod = "000";
+                    respuesta.Data = modeloToDelete;
+                    respuesta.Mensaje = "OK";
+                }
+                else
+                {
+                    respuesta.Cod = "999";
+                    respuesta.Mensaje = "No existe un modelo registrado con el ID ingresado, no se puede realizar cambios";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("CatalogoServices", "DeleteModelo", ex.Message);
+            }
+            return respuesta;
+        }
+
+        public async Task<Respuesta> DeleteCiudad(double id)
+        {
+            Respuesta respuesta = new Respuesta();
+            try
+            {
+                Ciudad? ciudadToDelete = await _context.Ciudads.FirstOrDefaultAsync(x => x.CiudadId == id);
+
+                if (ciudadToDelete is not null)
+                {
+                    ciudadToDelete.EstadoId = 0;
+
+                    _context.Ciudads.Update(ciudadToDelete);
+                    await _context.SaveChangesAsync();
+
+                    respuesta.Cod = "000";
+                    respuesta.Data = ciudadToDelete;
+                    respuesta.Mensaje = "OK";
+                }
+                else
+                {
+                    respuesta.Cod = "999";
+                    respuesta.Mensaje = "No existe una ciudad registrado con el ID ingresado, no se puede realizar cambios";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("CatalogoServices", "DeleteCiudad", ex.Message);
+            }
+            return respuesta;
+        }
+
+        public async Task<Respuesta> DeleteCaja(double id)
+        {
+            Respuesta respuesta = new Respuesta();
+            try
+            {
+                Caja? cajaToDelete = await _context.Cajas.FirstOrDefaultAsync(x => x.CajaId == id);
+
+                if (cajaToDelete is not null)
+                {
+                    cajaToDelete.EstadoId = 0;
+
+                    _context.Cajas.Update(cajaToDelete);
+                    await _context.SaveChangesAsync();
+
+                    respuesta.Cod = "000";
+                    respuesta.Data = cajaToDelete;
+                    respuesta.Mensaje = "OK";
+                }
+                else
+                {
+                    respuesta.Cod = "999";
+                    respuesta.Mensaje = "No existe un cajero registrado con el ID ingresado, no se puede realizar cambios";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("CatalogoServices", "DeleteCaja", ex.Message);
             }
             return respuesta;
         }

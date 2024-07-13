@@ -118,12 +118,10 @@ namespace Entity.Services
             catch (Exception ex)
             {
 
-                Log.LogErrorMetodos("VendedorServices", ex.Message, "DeleteVendedor");
+                Log.LogErrorMetodos("VendedorServices", "DeleteVendedor",  ex.Message);
             }
             return respuesta;
         }
 
     }
 }
-
-

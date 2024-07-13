@@ -315,5 +315,106 @@ namespace Entity.Controllers
             return respuesta;
         }
 
+        [HttpPut]
+        [Route("DeleteCategoria")]
+        public async Task<Respuesta> DeleteCategoria(double id)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _catalogo.DeleteCategoria(id);
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorMetodos("CatalogoController", "DeleteCategoria", ex.Message);
+            }
+
+            return respuesta;
+        }
+
+        [HttpPut]
+        [Route("DeleteMarca")]
+        public async Task<Respuesta> DeleteMarca(double id)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _catalogo.DeleteMarca(id);
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorMetodos("CatalogoController", "DeleteMarca", ex.Message);
+            }
+
+            return respuesta;
+        }
+
+        [HttpPut]
+        [Route("DeleteSucursal")]
+        public async Task<Respuesta> DeleteSucursal(double id)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _catalogo.DeleteSucursal(id);
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorMetodos("CatalogoController", "DeleteSucursal", ex.Message);
+            }
+
+            return respuesta;
+        }
+
+        [HttpPut]
+        [Route("DeleteModelo")]
+        public async Task<Respuesta> DeleteModelo(double id)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _catalogo.DeleteModelo(id);
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorMetodos("CatalogoController", "DeleteModelo", ex.Message);
+            }
+
+            return respuesta;
+        }
+
+        [HttpPut]
+        [Route("DeleteCiudad")]
+        public async Task<Respuesta> DeleteCiudad(double id)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _catalogo.DeleteCiudad(id);
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorMetodos("CatalogoController", "DeleteCiudad", ex.Message);
+            }
+
+            return respuesta;
+        }
+
+        [HttpPut]
+        [Route("DeleteCaja")]
+        public async Task<Respuesta> DeleteCaja(double id)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _catalogo.DeleteCaja(id);
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorMetodos("CatalogoController", "DeleteCaja", ex.Message);
+            }
+
+            return respuesta;
+        }
     }
 }

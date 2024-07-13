@@ -130,5 +130,36 @@ namespace Entity.Services
             }
             return respuesta;
         }
+        public async Task<Respuesta> DeleteProducto(double id)
+        {
+            Respuesta respuesta = new Respuesta();
+            try
+            {
+                Producto? productoToDelete = await _context.Productos.FirstOrDefaultAsync(x => x.ProductoId == id);
+
+                if (productoToDelete is not null)
+                {
+                    productoToDelete.EstadoId = 0;
+
+                    _context.Productos.Update(productoToDelete);
+                    await _context.SaveChangesAsync();
+
+                    respuesta.Cod = "000";
+                    respuesta.Data = productoToDelete;
+                    respuesta.Mensaje = "OK";
+                }
+                else
+                {
+                    respuesta.Cod = "999";
+                    respuesta.Mensaje = "No existe un producto registrado con el ID ingresado, no se puede realizar cambios";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("ProductoServices", "DeleteProducto", ex.Message);
+            }
+            return respuesta;
+        }
     }
 }

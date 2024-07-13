@@ -137,5 +137,36 @@ namespace Entity.Services
             }
             return respuesta;
         }
+        public async Task<Respuesta> DeleteCliente(double id)
+        {
+            Respuesta respuesta = new Respuesta();
+            try
+            {
+                Cliente? clienteToDelete = await _context.Clientes.FirstOrDefaultAsync(x => x.ClienteId == id);
+
+                if (clienteToDelete is not null)
+                {
+                    clienteToDelete.EstadoId = 0;
+
+                    _context.Clientes.Update(clienteToDelete);
+                    await _context.SaveChangesAsync();
+
+                    respuesta.Cod = "000";
+                    respuesta.Data = clienteToDelete;
+                    respuesta.Mensaje = "OK";
+                }
+                else
+                {
+                    respuesta.Cod = "999";
+                    respuesta.Mensaje = "No existe un cliente registrado con el ID ingresado, no se puede realizar cambios";
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Log.LogErrorMetodos("ClienteServices", "DeleteCliente", ex.Message);
+            }
+            return respuesta;
+        }
     }
 }

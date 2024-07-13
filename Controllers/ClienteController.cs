@@ -65,5 +65,21 @@ namespace Entity.Controllers
             }
             return respuesta;
         }
+        [HttpPut]
+        [Route("DeleteCliente")]
+        public async Task<Respuesta> DeleteCliente(double id)
+        {
+            var respuesta = new Respuesta();
+            try
+            {
+                respuesta = await _cliente.DeleteCliente(id);
+            }
+            catch (Exception ex)
+            {
+                Log.LogErrorMetodos("CatalogoController", "DeleteCliente", ex.Message);
+            }
+
+            return respuesta;
+        }
     }
 }

@@ -25,5 +25,12 @@ namespace Entity.Interfaces
         Task<Respuesta> PutModelo(Modelo modelo);
         Task<Respuesta> PutCiudad(Ciudad ciudad);
         Task<Respuesta> PutCaja(Caja caja);
+
+        Task<Respuesta> DeleteCategoria(double id);
+        Task<Respuesta> DeleteMarca(double id);
+        Task<Respuesta> DeleteSucursal(double id);
+        Task<Respuesta> DeleteModelo(double id);
+        Task<Respuesta> DeleteCiudad(double id);
+        Task<Respuesta> DeleteCaja(double id);
     }
 }

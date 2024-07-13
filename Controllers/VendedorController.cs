@@ -68,12 +68,12 @@ namespace Entity.Controllers
         }
         [HttpPut]
         [Route("DeleteVendedor")]
-        public async Task<Respuesta> DeleteVendedor([FromBody] Vendedor vendedor)
+        public async Task<Respuesta> DeleteVendedor(double id)
         {
             var respuesta = new Respuesta();
             try
             {
-                respuesta = await _vendedor.DeleteVendedor(vendedor);
+                respuesta = await _vendedor.DeleteVendedor(id);
             }
             catch (Exception ex)
             {
