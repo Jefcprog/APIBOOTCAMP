@@ -181,37 +181,40 @@ namespace Entity.Services
             }
             return respuesta;
         }
-        public async Task<Respuesta> DeleteVenta(double id)
+        public async Task<Respuesta> DeleteVenta(Venta venta)
         {
             Respuesta respuesta = new Respuesta();
             try
             {
-                Venta? ventaToDelete = await _context.Ventas.FirstOrDefaultAsync(x => x.IdFactura == id);
+                var existingVenta = await _context.Ventas.FindAsync(venta.IdFactura);
 
-                if (ventaToDelete is not null)
+                if (existingVenta != null)
                 {
-                    ventaToDelete.EstadoId = 0;
+                    _context.Entry(existingVenta).CurrentValues.SetValues(venta);
+                    _context.Entry(existingVenta).State = EntityState.Modified;
 
-                    _context.Ventas.Update(ventaToDelete);
+                    venta.EstadoId = 0;
+                    venta.Fecha_Hora = DateTime.Now;
                     await _context.SaveChangesAsync();
 
-                    respuesta.Cod = "000";
-                    respuesta.Data = ventaToDelete;
-                    respuesta.Mensaje = "OK";
+                    respuesta.Cod = "111";
+                    respuesta.Mensaje = "Se ha eliminado correctamente";
                 }
                 else
                 {
-                    respuesta.Cod = "999";
-                    respuesta.Mensaje = "No existe una venta registrada con el ID ingresado, no se puede realizar cambios";
+                    respuesta.Cod = "888";
+                    respuesta.Mensaje = "La venta no existe";
                 }
             }
             catch (Exception ex)
             {
-
+                respuesta.Cod = "999";
+                respuesta.Mensaje = "Se presentó una novedad, comunicarse con el departamento de sistemas";
                 Log.LogErrorMetodos("VentaServices", "DeleteVenta", ex.Message);
             }
             return respuesta;
         }
+
 
     }
 }

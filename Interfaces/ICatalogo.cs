@@ -26,11 +26,11 @@ namespace Entity.Interfaces
         Task<Respuesta> PutCiudad(Ciudad ciudad);
         Task<Respuesta> PutCaja(Caja caja);
 
-        Task<Respuesta> DeleteCategoria(double id);
-        Task<Respuesta> DeleteMarca(double id);
-        Task<Respuesta> DeleteSucursal(double id);
-        Task<Respuesta> DeleteModelo(double id);
-        Task<Respuesta> DeleteCiudad(double id);
-        Task<Respuesta> DeleteCaja(double id);
+        Task<Respuesta> DeleteCategoria(Categorium categoria);
+        Task<Respuesta> DeleteMarca(Marca marca);
+        Task<Respuesta> DeleteSucursal(Sucursal sucursal);
+        Task<Respuesta> DeleteModelo(Modelo modelo);
+        Task<Respuesta> DeleteCiudad(Ciudad ciudad);
+        Task<Respuesta> DeleteCaja(Caja caja);
     }
 }

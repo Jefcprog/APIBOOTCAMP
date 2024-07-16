@@ -480,118 +480,121 @@ namespace Entity.Services
             return respuesta;
         }
 
-        public async Task<Respuesta> DeleteCategoria(double id)
+        public async Task<Respuesta> DeleteCategoria(Categorium categoria)
         {
             Respuesta respuesta = new Respuesta();
             try
             {
-                Categorium? categoriaToDelete = await _context.Categoria.FirstOrDefaultAsync(x => x.CategId == id);
-
-                if (categoriaToDelete is not null)
+                var existingCategoria = await _context.Categoria.FindAsync(categoria.CategId);
+                if (existingCategoria != null)
                 {
-                    categoriaToDelete.EstadoId = 0;
+                    _context.Entry(existingCategoria).CurrentValues.SetValues(categoria);
+                    _context.Entry(existingCategoria).State = EntityState.Modified;
 
-                    _context.Categoria.Update(categoriaToDelete);
+                    categoria.EstadoId = 0;
                     await _context.SaveChangesAsync();
 
                     respuesta.Cod = "000";
-                    respuesta.Data = categoriaToDelete;
+                    respuesta.Data = categoria;
                     respuesta.Mensaje = "OK";
                 }
                 else
                 {
                     respuesta.Cod = "999";
-                    respuesta.Mensaje = "No existe una categoria registrado con el ID ingresado, no se puede realizar cambios";
+                    respuesta.Mensaje = "No existe una categoría registrada con el ID ingresado, no se puede realizar cambios";
                 }
             }
             catch (Exception ex)
             {
-
+                respuesta.Cod = "999";
+                respuesta.Mensaje = "Se presentó una novedad, comunicarse con el departamento de sistemas";
                 Log.LogErrorMetodos("CatalogoServices", "DeleteCategoria", ex.Message);
             }
             return respuesta;
         }
 
-        public async Task<Respuesta> DeleteMarca(double id)
+        public async Task<Respuesta> DeleteMarca(Marca marca)
         {
             Respuesta respuesta = new Respuesta();
             try
             {
-                Categorium? categoriaToDelete = await _context.Categoria.FirstOrDefaultAsync(x => x.CategId == id);
-
-                if (categoriaToDelete is not null)
+                var existingMarca = await _context.Marcas.FindAsync(marca.MarcaId);
+                if (existingMarca != null)
                 {
-                    categoriaToDelete.EstadoId = 0;
+                    _context.Entry(existingMarca).CurrentValues.SetValues(marca);
+                    _context.Entry(existingMarca).State = EntityState.Modified;
 
-                    _context.Categoria.Update(categoriaToDelete);
+                    marca.EstadoId = 0;
                     await _context.SaveChangesAsync();
 
                     respuesta.Cod = "000";
-                    respuesta.Data = categoriaToDelete;
+                    respuesta.Data = marca;
                     respuesta.Mensaje = "OK";
                 }
                 else
                 {
                     respuesta.Cod = "999";
-                    respuesta.Mensaje = "No existe una marca registrado con el ID ingresado, no se puede realizar cambios";
+                    respuesta.Mensaje = "No existe una marca registrada con el ID ingresado, no se puede realizar cambios";
                 }
             }
             catch (Exception ex)
             {
-
+                respuesta.Cod = "999";
+                respuesta.Mensaje = "Se presentó una novedad, comunicarse con el departamento de sistemas";
                 Log.LogErrorMetodos("CatalogoServices", "DeleteMarca", ex.Message);
             }
             return respuesta;
         }
 
-        public async Task<Respuesta> DeleteSucursal(double id)
+        public async Task<Respuesta> DeleteSucursal(Sucursal sucursal)
         {
             Respuesta respuesta = new Respuesta();
             try
             {
-                Sucursal? sucursalToDelete = await _context.Sucursals.FirstOrDefaultAsync(x => x.SucursalId == id);
-
-                if (sucursalToDelete is not null)
+                var existingSucursal = await _context.Sucursals.FindAsync(sucursal.SucursalId);
+                if (existingSucursal != null)
                 {
-                    sucursalToDelete.EstadoId = 0;
+                    _context.Entry(existingSucursal).CurrentValues.SetValues(sucursal);
+                    _context.Entry(existingSucursal).State = EntityState.Modified;
 
-                    _context.Sucursals.Update(sucursalToDelete);
+                    sucursal.EstadoId = 0;
                     await _context.SaveChangesAsync();
 
                     respuesta.Cod = "000";
-                    respuesta.Data = sucursalToDelete;
+                    respuesta.Data = sucursal;
                     respuesta.Mensaje = "OK";
                 }
                 else
                 {
                     respuesta.Cod = "999";
-                    respuesta.Mensaje = "No existe una sucursal registrado con el ID ingresado, no se puede realizar cambios";
+                    respuesta.Mensaje = "No existe una sucursal registrada con el ID ingresado, no se puede realizar cambios";
                 }
             }
             catch (Exception ex)
             {
-
+                respuesta.Cod = "999";
+                respuesta.Mensaje = "Se presentó una novedad, comunicarse con el departamento de sistemas";
                 Log.LogErrorMetodos("CatalogoServices", "DeleteSucursal", ex.Message);
             }
             return respuesta;
         }
 
-        public async Task<Respuesta> DeleteModelo(double id)
+        public async Task<Respuesta> DeleteModelo(Modelo modelo)
         {
             Respuesta respuesta = new Respuesta();
             try
             {
-                Modelo? modeloToDelete = await _context.Modelos.FirstOrDefaultAsync(x => x.ModeloId == id);
-
-                if (modeloToDelete is not null)
+                var existingModelo = await _context.Modelos.FindAsync(modelo.ModeloId);
+                if (existingModelo != null)
                 {
-                    modeloToDelete.EstadoId = 0;
+                    _context.Entry(existingModelo).CurrentValues.SetValues(modelo);
+                    _context.Entry(existingModelo).State = EntityState.Modified;
 
-                    _context.Modelos.Update(modeloToDelete);
+                    modelo.EstadoId = 0;
                     await _context.SaveChangesAsync();
 
                     respuesta.Cod = "000";
-                    respuesta.Data = modeloToDelete;
+                    respuesta.Data = modelo;
                     respuesta.Mensaje = "OK";
                 }
                 else
@@ -602,60 +605,62 @@ namespace Entity.Services
             }
             catch (Exception ex)
             {
-
+                respuesta.Cod = "999";
+                respuesta.Mensaje = "Se presentó una novedad, comunicarse con el departamento de sistemas";
                 Log.LogErrorMetodos("CatalogoServices", "DeleteModelo", ex.Message);
             }
             return respuesta;
         }
 
-        public async Task<Respuesta> DeleteCiudad(double id)
+        public async Task<Respuesta> DeleteCiudad(Ciudad ciudad)
         {
             Respuesta respuesta = new Respuesta();
             try
             {
-                Ciudad? ciudadToDelete = await _context.Ciudads.FirstOrDefaultAsync(x => x.CiudadId == id);
-
-                if (ciudadToDelete is not null)
+                var existingCiudad = await _context.Ciudads.FindAsync(ciudad.CiudadId);
+                if (existingCiudad != null)
                 {
-                    ciudadToDelete.EstadoId = 0;
+                    _context.Entry(existingCiudad).CurrentValues.SetValues(ciudad);
+                    _context.Entry(existingCiudad).State = EntityState.Modified;
 
-                    _context.Ciudads.Update(ciudadToDelete);
+                    ciudad.EstadoId = 0;
                     await _context.SaveChangesAsync();
 
                     respuesta.Cod = "000";
-                    respuesta.Data = ciudadToDelete;
+                    respuesta.Data = ciudad;
                     respuesta.Mensaje = "OK";
                 }
                 else
                 {
                     respuesta.Cod = "999";
-                    respuesta.Mensaje = "No existe una ciudad registrado con el ID ingresado, no se puede realizar cambios";
+                    respuesta.Mensaje = "No existe una ciudad registrada con el ID ingresado, no se puede realizar cambios";
                 }
             }
             catch (Exception ex)
             {
-
+                respuesta.Cod = "999";
+                respuesta.Mensaje = "Se presentó una novedad, comunicarse con el departamento de sistemas";
                 Log.LogErrorMetodos("CatalogoServices", "DeleteCiudad", ex.Message);
             }
             return respuesta;
         }
 
-        public async Task<Respuesta> DeleteCaja(double id)
+        public async Task<Respuesta> DeleteCaja(Caja caja)
         {
             Respuesta respuesta = new Respuesta();
             try
             {
-                Caja? cajaToDelete = await _context.Cajas.FirstOrDefaultAsync(x => x.CajaId == id);
-
-                if (cajaToDelete is not null)
+                var existingCaja = await _context.Cajas.FindAsync(caja.CajaId);
+                if (existingCaja != null)
                 {
-                    cajaToDelete.EstadoId = 0;
+                    _context.Entry(existingCaja).CurrentValues.SetValues(caja);
+                    _context.Entry(existingCaja).State = EntityState.Modified;
 
-                    _context.Cajas.Update(cajaToDelete);
+                    caja.EstadoId = 0;
                     await _context.SaveChangesAsync();
 
                     respuesta.Cod = "000";
-                    respuesta.Data = cajaToDelete;
+                    respuesta.Data = caja;
                     respuesta.Mensaje = "OK";
                 }
                 else
@@ -666,7 +671,8 @@ namespace Entity.Services
             }
             catch (Exception ex)
             {
-
+                respuesta.Cod = "999";
+                respuesta.Mensaje = "Se presentó una novedad, comunicarse con el departamento de sistemas";
                 Log.LogErrorMetodos("CatalogoServices", "DeleteCaja", ex.Message);
             }
             return respuesta;

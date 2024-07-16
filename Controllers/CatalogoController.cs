@@ -317,12 +317,12 @@ namespace Entity.Controllers
 
         [HttpPut]
         [Route("DeleteCategoria")]
-        public async Task<Respuesta> DeleteCategoria(double id)
+        public async Task<Respuesta> DeleteCategoria([FromBody] Categorium categoria)
         {
             var respuesta = new Respuesta();
             try
             {
-                respuesta = await _catalogo.DeleteCategoria(id);
+                respuesta = await _catalogo.DeleteCategoria(categoria);
             }
             catch (Exception ex)
             {
@@ -334,12 +334,12 @@ namespace Entity.Controllers
 
         [HttpPut]
         [Route("DeleteMarca")]
-        public async Task<Respuesta> DeleteMarca(double id)
+        public async Task<Respuesta> DeleteMarca([FromBody] Marca marca)
         {
             var respuesta = new Respuesta();
             try
             {
-                respuesta = await _catalogo.DeleteMarca(id);
+                respuesta = await _catalogo.DeleteMarca(marca);
             }
             catch (Exception ex)
             {
@@ -351,12 +351,12 @@ namespace Entity.Controllers
 
         [HttpPut]
         [Route("DeleteSucursal")]
-        public async Task<Respuesta> DeleteSucursal(double id)
+        public async Task<Respuesta> DeleteSucursal([FromBody] Sucursal sucursal)
         {
             var respuesta = new Respuesta();
             try
             {
-                respuesta = await _catalogo.DeleteSucursal(id);
+                respuesta = await _catalogo.DeleteSucursal(sucursal);
             }
             catch (Exception ex)
             {
@@ -368,12 +368,12 @@ namespace Entity.Controllers
 
         [HttpPut]
         [Route("DeleteModelo")]
-        public async Task<Respuesta> DeleteModelo(double id)
+        public async Task<Respuesta> DeleteModelo([FromBody] Modelo modelo)
         {
             var respuesta = new Respuesta();
             try
             {
-                respuesta = await _catalogo.DeleteModelo(id);
+                respuesta = await _catalogo.DeleteModelo(modelo);
             }
             catch (Exception ex)
             {
@@ -385,12 +385,12 @@ namespace Entity.Controllers
 
         [HttpPut]
         [Route("DeleteCiudad")]
-        public async Task<Respuesta> DeleteCiudad(double id)
+        public async Task<Respuesta> DeleteCiudad([FromBody] Ciudad ciudad)
         {
             var respuesta = new Respuesta();
             try
             {
-                respuesta = await _catalogo.DeleteCiudad(id);
+                respuesta = await _catalogo.DeleteCiudad(ciudad);
             }
             catch (Exception ex)
             {
@@ -402,12 +402,12 @@ namespace Entity.Controllers
 
         [HttpPut]
         [Route("DeleteCaja")]
-        public async Task<Respuesta> DeleteCaja(double id)
+        public async Task<Respuesta> DeleteCaja([FromBody] Caja caja)
         {
             var respuesta = new Respuesta();
             try
             {
-                respuesta = await _catalogo.DeleteCaja(id);
+                respuesta = await _catalogo.DeleteCaja(caja);
             }
             catch (Exception ex)
             {
@@ -416,5 +416,6 @@ namespace Entity.Controllers
 
             return respuesta;
         }
+
     }
 }

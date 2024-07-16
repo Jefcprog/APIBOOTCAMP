@@ -32,7 +32,6 @@ namespace Entity.Services
                                     FechaHoraReg = cl.FechaHoraReg
                                 };
 
-                // Filtrar según las combinaciones posibles de los parámetros
                 if (clienteID != 0 && !string.IsNullOrEmpty(clienteNombre) && cedula != 0)
                 {
                     respuesta.Data = await query.Where(cl => cl.ClienteId == clienteID && cl.ClienteNombre.Contains(clienteNombre) && cl.Cedula == cedula).ToListAsync();
@@ -137,36 +136,39 @@ namespace Entity.Services
             }
             return respuesta;
         }
-        public async Task<Respuesta> DeleteCliente(double id)
+        public async Task<Respuesta> DeleteCliente(Cliente cliente)
         {
             Respuesta respuesta = new Respuesta();
             try
             {
-                Cliente? clienteToDelete = await _context.Clientes.FirstOrDefaultAsync(x => x.ClienteId == id);
+                var existingCliente = await _context.Clientes.FindAsync(cliente.ClienteId);
 
-                if (clienteToDelete is not null)
+                if (existingCliente != null)
                 {
-                    clienteToDelete.EstadoId = 0;
+                    _context.Entry(existingCliente).CurrentValues.SetValues(cliente);
+                    _context.Entry(existingCliente).State = EntityState.Modified;
 
-                    _context.Clientes.Update(clienteToDelete);
+                    cliente.EstadoId = 0;
+                    cliente.FechaHoraReg = DateTime.Now;
                     await _context.SaveChangesAsync();
 
-                    respuesta.Cod = "000";
-                    respuesta.Data = clienteToDelete;
-                    respuesta.Mensaje = "OK";
+                    respuesta.Cod = "111";
+                    respuesta.Mensaje = "Se ha eliminado correctamente";
                 }
                 else
                 {
-                    respuesta.Cod = "999";
-                    respuesta.Mensaje = "No existe un cliente registrado con el ID ingresado, no se puede realizar cambios";
+                    respuesta.Cod = "888";
+                    respuesta.Mensaje = "El cliente no existe";
                 }
             }
             catch (Exception ex)
             {
-
+                respuesta.Cod = "999";
+                respuesta.Mensaje = "Se presentó una novedad, comunicarse con el departamento de sistemas";
                 Log.LogErrorMetodos("ClienteServices", "DeleteCliente", ex.Message);
             }
             return respuesta;
         }
+
     }
 }

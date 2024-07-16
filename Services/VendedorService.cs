@@ -91,37 +91,39 @@ namespace Entity.Services
             }
             return respuesta;
         }
-        public async Task<Respuesta> DeleteVendedor(double id)
+        public async Task<Respuesta> DeleteVendedor(Vendedor vendedor)
         {
             Respuesta respuesta = new Respuesta();
             try
             {
-                Vendedor? vendedorToDelete = await _context.Vendedors.FirstOrDefaultAsync(x => x.VendedorId == id);
+                var existingVendedor = await _context.Vendedors.FindAsync(vendedor.VendedorId);
 
-                if (vendedorToDelete is not null)
+                if (existingVendedor != null)
                 {
-                    vendedorToDelete.EstadoId = 0;
+                    _context.Entry(existingVendedor).CurrentValues.SetValues(vendedor);
+                    _context.Entry(existingVendedor).State = EntityState.Modified;
 
-                    _context.Vendedors.Update(vendedorToDelete);
+                    vendedor.EstadoId = 0;
                     await _context.SaveChangesAsync();
 
-                    respuesta.Cod = "000";
-                    respuesta.Data = vendedorToDelete;
-                    respuesta.Mensaje = "OK";
+                    respuesta.Cod = "111";
+                    respuesta.Mensaje = "Se ha eliminado correctamente";
                 }
                 else
                 {
-                    respuesta.Cod = "999";
-                    respuesta.Mensaje = "No existe un vendedor registrado con el ID ingresado, no se puede realizar cambios";
+                    respuesta.Cod = "888";
+                    respuesta.Mensaje = "El vendedor no existe";
                 }
             }
             catch (Exception ex)
             {
-
-                Log.LogErrorMetodos("VendedorServices", "DeleteVendedor",  ex.Message);
+                respuesta.Cod = "999";
+                respuesta.Mensaje = "Se presentó una novedad, comunicarse con el departamento de sistemas";
+                Log.LogErrorMetodos("VendedorServices", "DeleteVendedor", ex.Message);
             }
             return respuesta;
         }
+
 
     }
 }

@@ -25,7 +25,7 @@ namespace Entity.Utilitarios
 				write.Close();
 
             }
-			catch (Exception ex)
+			catch (Exception)
 			{
 				throw;
 			}

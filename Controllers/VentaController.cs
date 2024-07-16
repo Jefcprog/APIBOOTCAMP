@@ -85,12 +85,12 @@ namespace Entity.Controllers
         }
         [HttpPut]
         [Route("DeleteVenta")]
-        public async Task<Respuesta> DeleteVenta(double id)
+        public async Task<Respuesta> DeleteVenta([FromBody] Venta venta)
         {
             var respuesta = new Respuesta();
             try
             {
-                respuesta = await _venta.DeleteVenta(id);
+                respuesta = await _venta.DeleteVenta(venta);
             }
             catch (Exception ex)
             {

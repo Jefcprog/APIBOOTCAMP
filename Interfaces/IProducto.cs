@@ -7,6 +7,6 @@ namespace Entity.Interfaces
         Task<Respuesta> GetListaProductos(int productoID, float precio);
         Task<Respuesta> PostProducto(Producto producto);
         Task<Respuesta> PutProducto(Producto producto);
-        Task<Respuesta> DeleteProducto(double id);
+        Task<Respuesta> DeleteProducto(Producto producto);
     }
 }

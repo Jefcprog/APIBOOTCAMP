@@ -7,7 +7,7 @@ namespace Entity.Interfaces
         Task<Respuesta> GetVendedor();
         Task<Respuesta> PostVendedor(Vendedor vendedor);
         Task<Respuesta> PutVendedor(Vendedor vendedor);
-        Task<Respuesta> DeleteVendedor(double id);
+        Task<Respuesta> DeleteVendedor(Vendedor vendedor);
 
     }
 }

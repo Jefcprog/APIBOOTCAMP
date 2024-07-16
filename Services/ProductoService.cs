@@ -130,33 +130,34 @@ namespace Entity.Services
             }
             return respuesta;
         }
-        public async Task<Respuesta> DeleteProducto(double id)
+        public async Task<Respuesta> DeleteProducto(Producto producto)
         {
             Respuesta respuesta = new Respuesta();
             try
             {
-                Producto? productoToDelete = await _context.Productos.FirstOrDefaultAsync(x => x.ProductoId == id);
-
-                if (productoToDelete is not null)
+                var existingProducto = await _context.Productos.FindAsync(producto.ProductoId);
+                if (existingProducto != null)
                 {
-                    productoToDelete.EstadoId = 0;
+                    _context.Entry(existingProducto).CurrentValues.SetValues(producto);
+                    _context.Entry(existingProducto).State = EntityState.Modified;
 
-                    _context.Productos.Update(productoToDelete);
+                    producto.EstadoId = 0;
+                    producto.FechaHoraReg = DateTime.Now;
                     await _context.SaveChangesAsync();
 
-                    respuesta.Cod = "000";
-                    respuesta.Data = productoToDelete;
-                    respuesta.Mensaje = "OK";
+                    respuesta.Cod = "111";
+                    respuesta.Mensaje = "Se ha eliminado correctamente";
                 }
                 else
                 {
-                    respuesta.Cod = "999";
-                    respuesta.Mensaje = "No existe un producto registrado con el ID ingresado, no se puede realizar cambios";
+                    respuesta.Cod = "888";
+                    respuesta.Mensaje = "El producto no existe";
                 }
             }
             catch (Exception ex)
             {
-
+                respuesta.Cod = "999";
+                respuesta.Mensaje = "Se presentó una novedad, comunicarse con el departamento de sistemas";
                 Log.LogErrorMetodos("ProductoServices", "DeleteProducto", ex.Message);
             }
             return respuesta;
